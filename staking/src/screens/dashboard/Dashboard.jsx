@@ -22,6 +22,8 @@ const Dashboard = (props) => {
       const account = accounts[0];
       props.dispatch(MetamaskLogIn(account))
     })
+  }else {
+    window.alert("Please install metamask")
   }
   return(
     <div>
