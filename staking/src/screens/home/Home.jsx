@@ -7,10 +7,26 @@ import { useHistory } from "react-router-dom";
 // Componetns
 import Header from '../../components/header'
 
-export default function Home(){
+// API
+import { HasMetamask } from '../../web3/web3'
+
+// Redux
+import { connect } from 'react-redux';
+import { MetamaskLogIn } from '../../redux-modules/user/actions';
+
+function Home(props){
   let history = useHistory();
-  const login = () => {
-    history.push("/dashboard");
+  const login = async() => {
+    var hasMetamask = HasMetamask()
+    if (hasMetamask) {
+      // Trigger Auth flow
+      const accounts = await window.ethereum.enable();
+      const account = accounts[0];
+      props.dispatch(MetamaskLogIn(account))
+      history.push("/dashboard");
+    } else {
+      window.alert("Please install metamask")
+    }
   }
   return (
     <div>
@@ -28,3 +44,10 @@ export default function Home(){
     </div>
   )
 }
+
+function mapStateToProps(state) {
+  return {}
+}
+
+
+export default connect(mapStateToProps)(Home)

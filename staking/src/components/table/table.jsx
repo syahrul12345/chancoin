@@ -101,13 +101,8 @@ const rows = [
   createData('Oreo', 437, 18.0),
 ].sort((a, b) => (a.calories < b.calories ? -1 : 1));
 
-const useStyles2 = makeStyles({
-  
-});
-
 export default function CustomPaginationActionsTable(props) {
   const { RightHeader, LeftHeader } = props
-  const classes = useStyles2();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 

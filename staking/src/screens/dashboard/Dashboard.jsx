@@ -1,6 +1,9 @@
 import React from 'react'
 import { Grid, Typography, Button } from '@material-ui/core'
 
+// Redux stuff
+import { connect } from 'react-redux';
+import { MetamaskLogIn } from '../../redux-modules/user/actions';
 
 // Componetns
 import Header from '../../components/header'
@@ -8,7 +11,18 @@ import CustomCard from '../../components/card'
 import Chart from '../../components/chart'
 import Table from '../../components/table'
 
-const Dashboard = () => {
+// Web3API
+import { HasMetamask } from '../../web3/web3'
+const Dashboard = (props) => {
+  const { account } = props
+  var hasMetamask = HasMetamask()
+  if (hasMetamask) {
+    // Trigger Auth flow
+    window.ethereum.enable().then((accounts) => {
+      const account = accounts[0];
+      props.dispatch(MetamaskLogIn(account))
+    })
+  }
   return(
     <div>
       <Header Title="Dashbaord" Description="Staking dashboard"/>
@@ -22,12 +36,12 @@ const Dashboard = () => {
           {/* Address info */}
           <Grid item xs={12} md={4}>
             <CustomCard height="42vh">
-              <Grid container justify="center" alignItems="space-between" alignContent="space-between">
+              <Grid container justify="center" alignItems="flex-end" alignContent="space-between">
                 <Grid item xs={12}>
                   <Grid container>
                     <Grid item xs={12}>
                       <Typography variant="h5"> Address </Typography>
-                      <Typography variant="body1"> 0x08EF50EF4D59830Fe6EAC3aB716f104f410e1d5f </Typography>
+                      <Typography variant="body1"> {account} </Typography>
                     </Grid>
                     <Grid item xs={12}>
                       <Typography variant="h6"> Total Balance:</Typography>
@@ -46,7 +60,7 @@ const Dashboard = () => {
                 <Grid item xs={12} style={{paddingTop:'7vh'}}>
                   <Grid container justify="flex-end" alignItems="center" alignContent="center">
                     <Grid item>
-                      <Button variant="filled"> Start Staking </Button>
+                      <Button variant="contained"> Start Staking </Button>
                     </Grid>
                   </Grid>
                 </Grid>
@@ -71,4 +85,10 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+function mapStateToProps(state){
+  return {
+    account: state.user.account
+  }
+}
+
+export default connect(mapStateToProps)(Dashboard)

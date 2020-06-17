@@ -9,6 +9,15 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { createMuiTheme,ThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
 
+// COmponents
+import rootReducer from './redux-modules';
+
+// Redux stuff
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+
+const store = createStore(rootReducer);
+
 const _App = () => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const theme = React.useMemo(
@@ -28,7 +37,9 @@ const _App = () => {
 }
 
 ReactDOM.render(
-  <_App/>,
+  <Provider store={store}>
+    <_App/>
+  </Provider>,
   document.getElementById('root')
 );
 
