@@ -12,7 +12,7 @@ import {
   SetUniswapBurn,
   SetTransferBurnAmount } from '../redux-modules/user/actions'
 
-const contractAddress = "0xE908b0Ef400B7df6939be9641092F7c1f4866e17"
+const contractAddress = process.env.REACT_APP_TOKEN_ADDRESS
 
 export const HasMetamask = () => {
   if (typeof window.ethereum !== 'undefined') {
