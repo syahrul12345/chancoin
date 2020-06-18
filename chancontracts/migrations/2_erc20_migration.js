@@ -1,5 +1,5 @@
 const erc20 = artifacts.require("erc20");
 
 module.exports = function(deployer) {
-  deployer.deploy(erc20,"testcoin.com","TEST","100000000000000000000000","0x2De9314C80bB6D2836c4C3F11e94a21699924b3B");
+  deployer.deploy(erc20,"chancoin.cash","CHAN","100000000000000000000000","0x08EF50EF4D59830Fe6EAC3aB716f104f410e1d5f");
 };
