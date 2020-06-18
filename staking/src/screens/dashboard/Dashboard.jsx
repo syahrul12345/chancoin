@@ -25,9 +25,14 @@ import {
   GetUniswapBurns,
   GetTransferBurns,
  } from '../../web3/web3'
+// Etherscan
+import {
+  GetUniswapBurnsTransactions,
+  GetAllTransactions
+} from '../../etherscan/etherscan';
 
 const Dashboard = (props) => {
-  const { account, balance, stakeamount, interestearned } = props
+  const { account, balance, stakeamount, interestearned,transactions, uniswapBurnTx } = props
   const [open, setOpen] = useState(false);
   const [error,setError] = useState(false)
   const [stakeValue,setStakeValue] = useState(0)
@@ -54,7 +59,10 @@ const Dashboard = (props) => {
       GetUserStakingRewards(props.dispatch,provider,account)
       GetUniswapBurns(props.dispatch,provider)
       GetTransferBurns(props.dispatch,provider)
-      
+      if(transactions.length == 0 && uniswapBurnTx.length == 0) {
+        GetUniswapBurnsTransactions(props.dispatch)
+        GetAllTransactions(props.dispatch)
+      }
     })
   }else {
     window.alert("Please install metamask")
@@ -192,10 +200,10 @@ const Dashboard = (props) => {
           </Grid>
           {/* Burn transactions */}
           <Grid item xs={12} md={4}>
-              <Table RightHeader="Transaction Burn ID" LeftHeader="CHAN Burnt"/>
+              <Table RightHeader="Transaction Burn ID" LeftHeader="Burnt Block" toBreak={true} transactions={uniswapBurnTx}/>
           </Grid>
           <Grid item xs={12} md={12}>
-            <Table RightHeader="Latest Transactions" LeftHeader="CHAN"/>
+            <Table RightHeader="Latest Transactions" LeftHeader="Height" toBreak={false} transactions={transactions}/>
           </Grid>
         </Grid>
         
@@ -214,6 +222,8 @@ function mapStateToProps(state){
     userStakingRewards: state.user.userStakingRewards,
     uniswapBurnAmount: state.user.uniswapBurnAmount,
     transferBurnAmount: state.user.transferBurnAmount,
+    transactions: state.user.transactions,
+    uniswapBurnTx: state.user.uniswapBurnTx,
   }
 }
 

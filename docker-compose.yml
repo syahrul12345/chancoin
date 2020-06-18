@@ -2,8 +2,17 @@ version: '3'
 services:
   chancoinwebsite:
     container_name: chaincoinwebsite
-    build: .
+    build: 
+      context: .
+      args:
+        - REACT_APP_ETHERSCAN_TOKEN=URZ588TXEIW93QEXDGBGSKXJCXMQGVIIFQ
+        - REACT_APP_TOKEN_ADDRESS=0xE908b0Ef400B7df6939be9641092F7c1f4866e17
+        - REACT_APP_UNISWAP_ADDRESS=0x000000000000000000000000098596b2cabd8b7607fa49d24c5bd8648d57151c
     environment: 
       - PORT=3000
+      - DASHBOARD_PORT=3001
+      - PRODUCTION=true
+      
     ports:
       - 3000:3000
+      - 3001:3001

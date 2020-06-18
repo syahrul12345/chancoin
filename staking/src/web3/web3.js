@@ -113,6 +113,7 @@ export const GetUniswapBurns = (dispatch,provider) => {
 }
 
 export const GetTransferBurns = (dispatch,provider) => {
+  console.log("calling tx burn api")
   var web3 = new Web3(provider)
   var tokenInst = new web3.eth.Contract(tokenABI.abi,contractAddress);
   tokenInst.methods.getTransferBurns().call().then((transferBurnAmount) => {

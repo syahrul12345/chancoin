@@ -8,6 +8,8 @@ const userInitialState = {
   userStakingRewards: 0,
   uniswapBurnAmount: 0,
   transferBurnAmount: 0,
+  transactions: [],
+  uniswapBurnTx: [],
 };
 
 function userReducer(state = userInitialState, action) {
@@ -65,6 +67,18 @@ function userReducer(state = userInitialState, action) {
       return {
         ...state,
         transferBurnAmount,
+      }
+    case 'SET_UNISWAP_BURN_TX':
+      const { uniswapBurnTx } = action.payload;
+      return {
+        ...state,
+        uniswapBurnTx,
+      }
+    case 'SET_ALL_TRANSACTIONS':
+      const { transactions } = action.payload;
+      return {
+        ...state,
+        transactions,
       }
     default:
       return state;

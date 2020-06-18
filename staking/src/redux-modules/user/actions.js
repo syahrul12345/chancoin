@@ -61,3 +61,17 @@ export const SetTransferBurnAmount = (transferBurnAmount) => ({
   }
 })
 
+export const SetUniswapBurnTx = (uniswapBurnTx) => ({
+  type: 'SET_UNISWAP_BURN_TX',
+  payload: {
+    uniswapBurnTx,
+  }
+})
+
+export const SetAllTransactions = (transactions) => ({
+  type: 'SET_ALL_TRANSACTIONS',
+  payload: {
+    transactions,
+  }
+})
+
